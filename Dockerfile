@@ -1,9 +1,8 @@
-FROM alpine:3.8
+FROM centos:7
 COPY . /opt/skynet/
 WORKDIR /opt/skynet/
-RUN apk update && apk upgrade \
-&& apk add make gcc git autoconf g++ readline-dev \
-&& make linux && apk del make gcc git autoconf g++ \
+RUN yum -y install gcc make git autoconf readline readline-devel \
+&& make linux && yum remove gcc git make autoconf readline-devel \
 && find . -name *.o | xargs rm -f
 # 服务器配置环境变量, 默认config
 # config file path for the server
